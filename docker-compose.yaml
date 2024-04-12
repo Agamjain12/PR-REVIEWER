@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodb_data:/data/db
+
+  next:
+    image: nextauth
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NEXTAUTH_SECRET:  sadfsfsfsasd4werfx
+      GITHUB_CLIENT_ID: 4cc429e0375b5ba1edb1
+      GITHUB_CLIENT_SECRET: dac272f631d69bdb8ecafc5a8c9f49a4223b176e
+      MONGODB_URI: mongodb://root:example@mongodb:27017
+      WEBHOOK_URL: https://webhook.site/e585d546-96ce-4c8c-b47c-489cad3f2e0f
+  
+    
+
+volumes:
+  mongodb_data:
+    driver: local
